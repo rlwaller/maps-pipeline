@@ -1,5 +1,7 @@
 # maps-ror
 
+> **Note:** Codex hosted environments may block package installs; run locally or rely on CI.
+
 Research-grade, reproducible map/spectra toy pipeline with a conda-first workflow and pip fallback.
 
 ## Conda-first quickstart (recommended)

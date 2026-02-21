@@ -1,10 +1,23 @@
+import importlib.util
 from pathlib import Path
 import subprocess
 
-import pandas as pd
+import pytest
+
+
+def _missing_core_deps():
+    required = ("numpy", "pandas", "healpy")
+    return [name for name in required if importlib.util.find_spec(name) is None]
 
 
 def test_toy_pipeline_generates_outputs() -> None:
+    missing = _missing_core_deps()
+    if missing:
+        pytest.skip(
+            "Skipping toy pipeline test because required core dependencies are missing: "
+            + ", ".join(missing)
+        )
+
     subprocess.run(
         ["python", "scripts/build_maps.py", "--config", "configs/default.yaml"],
         check=True,
@@ -21,6 +34,8 @@ def test_toy_pipeline_generates_outputs() -> None:
     assert map_path.exists()
     assert table_path.exists()
     assert fig_path.exists()
+
+    import pandas as pd
 
     df = pd.read_csv(table_path)
     assert set(df.columns) == {"frequency", "power"}
