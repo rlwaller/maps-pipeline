@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup micromamba
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-name: maps-ror
+          init-shell: bash
+          cache-environment: true
+
+      - name: Create conda env from environment.yml
+        id: create_env
+        shell: bash -el {0}
+        run: |
+          set -euxo pipefail
+          if ! micromamba env create -y -n maps-ror -f environment.yml; then
+            echo "Primary environment creation failed (often due to healpy/pymaster availability)."
+            python - <<'PY'
+from pathlib import Path
+text = Path("environment.yml").read_text()
+text = "\n".join(
+    line for line in text.splitlines()
+    if line.strip() not in {"- healpy", "- pymaster"}
+)
+Path("environment.ci.yml").write_text(text + "\n")
+print("Wrote environment.ci.yml without healpy/pymaster")
+PY
+            micromamba env create -y -n maps-ror -f environment.ci.yml
+            echo "namaster_missing=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "namaster_missing=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run tests
+        shell: bash -el {0}
+        env:
+          NAMASTER_MISSING: ${{ steps.create_env.outputs.namaster_missing }}
+        run: |
+          set -euxo pipefail
+          micromamba activate maps-ror
+          if [ "$NAMASTER_MISSING" = "true" ]; then
+            echo "healpy/pymaster unavailable in runner environment; NaMaster tests will be skipped."
+          fi
+          make test
+
+      - name: Run toy pipeline
+        shell: bash -el {0}
+        run: |
+          set -euxo pipefail
+          micromamba activate maps-ror
+          make toy
