@@ -1,0 +1,5 @@
+seed: 7
+n_points: 64
+output_map: data_processed/mock_map.npy
+output_table: results/tables/spectrum.csv
+output_figure: results/figures/spectrum.png
