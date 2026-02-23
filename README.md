@@ -22,6 +22,16 @@ If the environment already exists and you want to sync it to `environment.yml`:
 make conda-update
 ```
 
+## Docker (recommended on macOS for NaMaster)
+
+Use Docker to build and run the Linux environment, which avoids local Apple Silicon build issues for `healpy`/`pymaster`.
+
+```bash
+make docker-build
+make docker-toy
+make docker-test
+```
+
 ## Pip fallback quickstart
 
 If conda/mamba are unavailable, use a virtual environment and pip requirements.
