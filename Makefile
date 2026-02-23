@@ -1,7 +1,7 @@
 ENV_NAME ?= maps-ror
 MAMBA_BIN := $(shell command -v micromamba || command -v mamba)
 
-.PHONY: conda conda-update venv install test toy clean
+.PHONY: conda conda-update venv install test toy clean docker-build docker-test docker-toy
 
 conda:
 	@if [ -z "$(MAMBA_BIN)" ]; then \
@@ -34,3 +34,13 @@ clean:
 	rm -rf data_processed/*
 	rm -f results/tables/*.csv
 	rm -f results/figures/*.png
+
+
+docker-build:
+	docker compose build
+
+docker-test:
+	docker compose run --rm maps make test
+
+docker-toy:
+	docker compose run --rm maps make toy
