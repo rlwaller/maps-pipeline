@@ -2,7 +2,8 @@ cff-version: 1.2.0
 title: maps-ror
 message: "If you use this software, please cite it as below."
 version: 0.1.0
-url: "https://github.com/your-org/maps-ror"
+url: "https://github.com/rlwaller/maps-pipeline"
+date-released: 2026-02-26
 authors:
-  - family-names: "Placeholder"
-    given-names: "Author"
+  - family-names: "Waller"
+    given-names: "Russell"
