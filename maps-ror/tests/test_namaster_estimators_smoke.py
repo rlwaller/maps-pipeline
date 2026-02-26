@@ -19,7 +19,7 @@ def test_namaster_smoke_toy():
 
     t_map, g_map = hp.synfast([cl_tt, cl_gg, cl_tg], nside=nside, lmax=lmax, new=True, pol=False)
     mask = np.ones(hp.nside2npix(nside))
-    b = make_nmt_bin(nside=nside, bin_edges=[2, 10, 20, 40, 64], lmax=lmax)
+    b = make_nmt_bin(nside=nside, bin_edges=[2, 10, 20, 40, lmax + 1], lmax=lmax)
 
     out = compute_Tg_and_gg(t_map=t_map, g_map=g_map, mask=mask, binning=b, lmax=lmax)
     assert np.isfinite(out["tg"]["cl_binned"]).all()

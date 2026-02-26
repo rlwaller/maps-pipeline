@@ -10,5 +10,4 @@ dependencies:
   - matplotlib
   - pytest
   - healpy
-  - pymaster
   - pip

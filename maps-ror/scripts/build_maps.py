@@ -79,6 +79,19 @@ def main() -> None:
     if cfg.get("remove_dipole", True):
         g_map = remove_monopole_dipole(g_map, analysis_mask)
 
+    # Ensure plain ndarrays (np.save can't handle MaskedArray)
+    if isinstance(g_map, np.ma.MaskedArray):
+    	g_map = np.asarray(g_map.filled(0.0))
+    else:
+    	g_map = np.asarray(g_map)
+
+    if isinstance(t_map, np.ma.MaskedArray):
+    	t_map = np.asarray(t_map.filled(0.0))
+    else:
+    	t_map = np.asarray(t_map)
+
+    analysis_mask = np.asarray(analysis_mask)
+
     np.save(out_dir / "t_map.npy", t_map)
     np.save(out_dir / "g_map.npy", g_map)
     np.save(out_dir / "mask.npy", analysis_mask)

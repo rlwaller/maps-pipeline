@@ -1,5 +1,9 @@
 services:
   maps:
+    environment:
+      - PYTHONPATH=maps-ror
+      - MPLBACKEND=Agg
+    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile

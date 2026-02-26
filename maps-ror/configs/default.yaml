@@ -1,17 +1,18 @@
-nside_out: 512
+plot: false
+nside_out: 16
 lmin: 2
-lmax: 512
-bin_edges: [2, 10, 20, 30, 50, 80, 120, 200, 300, 512]
-apodize_deg: 1.0
+lmax: 16
+bin_edges: [2, 4, 8, 12, lmax + 1]
+apodize_deg: 0.0
 remove_dipole: true
 null_test:
-  n_rot: 16
+  n_rot: 0
   seed: 123
 maps:
   cmb:
     kind: planck_smica
-    path_map: data_raw/planck/SMICA_T.fits
-    path_mask: data_raw/planck/COMMON_MASK.fits
+    path_map: data_raw/planck/COM_CMB_IQU-smica_2048_R3.00_full.fits
+    path_mask: data_raw/planck/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits
   tracer:
     kind: unwise
     path_map: data_raw/unwise/unwise_overdensity.fits
@@ -22,4 +23,4 @@ output:
 toy_mode:
   enabled: true
   seed: 0
-  toy_signal_amp: 0.2
+  toy_signal_amp: 0.0

@@ -18,11 +18,15 @@ def compute_bandpowers_spin0_spin0(
     lmax: int,
 ) -> dict[str, Any]:
     """Compute decoupled binned pseudo-C_ell using standard NaMaster workflow."""
-    field_x = nmt.NmtField(mask, [map_x], purify_b=False, purify_e=False)
-    field_y = nmt.NmtField(mask, [map_y], purify_b=False, purify_e=False)
+    lmax_fields = getattr(binning, "lmax", None)
+    if lmax_fields is None:
+    	raise ValueError("Binning object has no lmax; cannot align field lmax with bins.")
+
+    field_x = nmt.NmtField(mask, [map_x], lmax=lmax_fields, purify_b=False, purify_e=False)
+    field_y = nmt.NmtField(mask, [map_y], lmax=lmax_fields, purify_b=False, purify_e=False)
 
     workspace = nmt.NmtWorkspace()
-    workspace.compute_coupling_matrix(field_x, field_y, binning, lmax=lmax)
+    workspace.compute_coupling_matrix(field_x, field_y, binning)
 
     cl_coupled = nmt.compute_coupled_cell(field_x, field_y)
     cl_decoupled = workspace.decouple_cell(cl_coupled)

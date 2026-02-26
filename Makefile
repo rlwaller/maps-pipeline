@@ -24,7 +24,7 @@ install:
 	pip install -r requirements.txt
 
 test:
-	pytest -q
+	PYTHONPATH=maps-ror pytest -q maps-ror/tests
 
 toy:
 	python scripts/build_maps.py --config configs/default.yaml

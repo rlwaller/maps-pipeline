@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gfortran \
     cmake \
     pkg-config \
+    wget \
+    ca-certificates \
     libfftw3-dev \
     libgsl-dev \
     libcfitsio-dev \

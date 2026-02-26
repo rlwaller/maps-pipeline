@@ -11,8 +11,11 @@ def make_nmt_bin(nside: int, bin_edges: list[int], lmax: int) -> nmt.NmtBin:
     edges = np.asarray(bin_edges, dtype=int)
     if edges[0] < 2:
         raise ValueError("bin_edges must start at ell>=2")
-    if edges[-1] != lmax:
-        raise ValueError("Last bin edge must equal lmax for v1 config clarity.")
+    if edges[-1] != (lmax + 1):
+        raise ValueError(
+        f"By convention, last bin edge must equal lmax+1 (got {edges[-1]} vs {lmax+1}). "
+        "Use half-open bin edges: [l0, l1) with last edge = lmax+1."
+    )
     return nmt.NmtBin.from_edges(edges[:-1], edges[1:])
 
 
