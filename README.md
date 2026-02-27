@@ -2,6 +2,8 @@
 
 > **Note:** Codex hosted environments may block package installs; run locally or rely on CI.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18800799.svg)](https://doi.org/10.5281/zenodo.18800799)
+
 Research-grade, reproducible map/spectra toy pipeline with a conda-first workflow and pip fallback.
 
 ## Conda-first quickstart (recommended)
