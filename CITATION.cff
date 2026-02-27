@@ -3,7 +3,8 @@ title: maps-ror
 message: "If you use this software, please cite it as below."
 version: 0.1.0
 url: "https://github.com/rlwaller/maps-pipeline"
-date-released: 2026-02-26
+doi: 10.5281/zenodo.18800799
+date-released: 2026-02-27
 authors:
   - family-names: "Waller"
     given-names: "Russell"
